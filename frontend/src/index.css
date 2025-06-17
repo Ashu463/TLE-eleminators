@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: override Tailwind styles here */
+body {
+  @apply bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white;
+}
+
+.react-calendar-heatmap .color-empty {
+  fill: #ebedf0;
+  rx: 4;
+  ry: 4;
+}
+
+.react-calendar-heatmap .color-scale-1 {
+  fill: #dbeafe; /* light blue */
+  rx: 4;
+  ry: 4;
+}
+
+.react-calendar-heatmap .color-scale-2 {
+  fill: #60a5fa; /* medium blue */
+  rx: 4;
+  ry: 4;
+}
+
+.react-calendar-heatmap .color-scale-3 {
+  fill: #3b82f6; /* darker blue */
+  rx: 4;
+  ry: 4;
+}
+
+.react-calendar-heatmap .color-scale-4 {
+  fill: #1e3a8a; /* deep navy blue */
+  rx: 4;
+  ry: 4;
+}

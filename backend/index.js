@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import cron from 'node-cron';
 import { Student } from './db/index.js';
 import { fetchCodeforcesUserData } from './api/fetch_data.js';
-
+import {checkInactivityAndSendEmail} from './api/email_sender.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
@@ -28,16 +28,15 @@ app.listen(PORT, () => {
 });
 
 cron.schedule('0 2 * * *', async () => {
-  console.log('Starting daily Codeforces data sync...');
-  
   try {
     // Get all students from database
     const students = await Student.find({});
     
     // Update each student's data
+    const arr = [];
     for (const student of students) {
-      if (student.codeforcesHandle) {
-        const cfData = await fetchCodeforcesUserData(student.codeforcesHandle);
+      if (student.codeforces_handle) {
+        const cfData = await fetchCodeforcesUserData(student.codeforces_handle);
         
         // Update student record
         await Student.findByIdAndUpdate(student._id, {
@@ -48,9 +47,11 @@ cron.schedule('0 2 * * *', async () => {
         });
         
         // Check for inactivity (no submissions in last 7 days)
-        // await checkInactivityAndSendEmail(student);
+        const response = await checkInactivityAndSendEmail(student);
+        arr.push(response);
       }
     }
+    res.json({ message: 'Daily sync completed successfully', data: arr });
     
     console.log('Daily sync completed successfully');
   } catch (error) {

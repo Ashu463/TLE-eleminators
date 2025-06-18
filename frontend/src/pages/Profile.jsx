@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import mockAPI from '../../../backend/api/mock_api';
+import studentData from '../../../backend/api/student_data';
 import RatingChart from '../components/RatingChart';
 import ProblemStats from '../components/ProblemStats';
 import { Mail, Clock } from 'lucide-react';
 import axios from 'axios';
+
+
 const Profile = () => {
   const { isDark } = useTheme();
   const { handle } = useParams();
@@ -41,8 +43,8 @@ const Profile = () => {
     if (!student) return;
     setLoading(true);
     Promise.all([
-      mockAPI.getContestHistory(student.codeforces_handle, contestFilter),
-      mockAPI.getProblemStats(student.codeforces_handle, problemFilter)
+      studentData.getContestHistory(student.codeforces_handle, contestFilter),
+      studentData.getProblemStats(student.codeforces_handle, problemFilter)
     ])
       .then(([contestData, statsData]) => {
         setContests(contestData);
@@ -141,9 +143,9 @@ const Profile = () => {
               onChange={(e) => setProblemFilter(Number(e.target.value))}
               className={`px-3 py-1 border rounded-md ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             >
+              <option value={7}>Last 7 days</option>
               <option value={30}>Last 30 days</option>
               <option value={90}>Last 90 days</option>
-              <option value={365}>Last 365 days</option>
             </select>
           </div>
           {problemStats && <ProblemStats stats={problemStats} />}

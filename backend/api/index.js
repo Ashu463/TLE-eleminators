@@ -7,24 +7,26 @@ apiRouter.use(express.json());
 apiRouter.get('/students', async (req, res) => {
   try {
     const students = await Student.find();
-    res.json(students);
+    if(!students){
+      return res.status(404).json({ error: 'No students found' });
+    }
+    res.json({success: true, data: students});
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch students' });
+    res.status(500).json({success: false, error: 'Failed to fetch students' });
   }
 });
 apiRouter.post('/students', async (req, res) => {
   try {
     const codeforces_handle = req.body.codeforces_handle;
+    if (!req.body.name || !req.body.codeforces_handle) {
+      return res.status(400).json({success: false, error: 'Name and Codeforces handle are required' });
+    }
     const obj = await fetchCodeforcesUserData(codeforces_handle);
     if (!obj.exists) {
-      return res.status(404).json({ error: 'Codeforces user not found' });
-    }
-    // Create a new student document
-    if (!req.body.name || !req.body.codeforces_handle) {
-      return res.status(400).json({ error: 'Name and Codeforces handle are required' });
+      return res.status(404).json({success: false, error: 'Codeforces user not found' });
     }
     if (await Student.findOne({ codeforces_handle })) {
-      return res.status(400).json({ error: 'Student with this Codeforces handle already exists' });
+      return res.status(400).json({success: false, error: 'Student with this Codeforces handle already exists' });
     }
     // Create and save the student
     const student = new Student({
@@ -43,21 +45,21 @@ apiRouter.post('/students', async (req, res) => {
         updated_at: new Date()
     });
     await student.save();
-    res.status(201).json(student);
+    res.status(201).json({success: true, data: student});
   } catch (error) {
-    res.status(400).json({ error: 'Failed to create student' });
+    res.status(400).json({success: false, error: 'Failed to create student' });
   }
 });
 apiRouter.put('/students/:id', async (req, res) => {
   try {
     const student = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!student) {
-      return res.status(404).json({ error: 'Student not found' });
+      return res.status(404).json({success: false, error: 'Student not found' });
     }
     student.last_updated = new Date();
     res.json(student);
   } catch (error) {
-    res.status(400).json({ error: 'Failed to update student' });
+    res.status(400).json({success: false, error: 'Failed to update student' });
   }
 }
 );
@@ -65,12 +67,12 @@ apiRouter.delete('/students/:id', async (req, res) => {
   try {
     const student = await Student.findByIdAndDelete(req.params.id);
     if (!student) {
-      return res.status(404).json({ error: 'Student not found' });
+      return res.status(404).json({success: false, error: 'Student not found' });
     }
     console.log(`Deleted student with ID: ${req.params.id}`);
-    res.json({ message: 'Student deleted successfully' });
+    res.json({success: true, message: 'Student deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete student' });
+    res.status(500).json({success: false, error: 'Failed to delete student' });
   }
 });
 apiRouter.get('/students/:handle', async (req, res) => {
@@ -78,11 +80,11 @@ apiRouter.get('/students/:handle', async (req, res) => {
     const student = await Student.findOne({codeforces_handle: req.params.handle});
 
     if (!student) {
-      return res.status(404).json({ error: 'Student not found in database' });
+      return res.status(404).json({success: false, error: 'Student not found in database' });
     }
     res.json({message: 'Student data fetched successfully', data: student});
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch student' });
+    res.status(500).json({success: false, error: 'Failed to fetch student' });
   }
 });
 apiRouter.get('/health', (req, res) => {

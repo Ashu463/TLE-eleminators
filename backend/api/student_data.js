@@ -17,7 +17,7 @@ function generateHeatmapFromSubmissions(submissions, days = 365) {
   return Object.entries(heatmap).map(([date, count]) => ({ date, count }));
 }
 
-const mockAPI = {
+const studentData = {
   async getContestHistory(cf_handle, days) {
     try {
       const response = await axios.get(`http://localhost:3000/api/students/${cf_handle}`);
@@ -115,4 +115,4 @@ const mockAPI = {
   }
 };
 
-export default mockAPI;
+export default studentData;

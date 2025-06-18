@@ -15,14 +15,15 @@ const Dashboard = () => {
   const fetchStudents = async () => {
     try {
       const res = await axios.get('http://localhost:3000/api/students');
-      if (!res.data || !Array.isArray(res.data)) {
+      if (!res.data || !Array.isArray(res.data.data)) {
         throw new Error('Invalid data format received from API');
       }
-      setStudents(res.data);
+      setStudents(res.data.data);
     } catch (error) {
       console.error('Error fetching students:', error);
     }
   };
+
   useEffect(() => {
     fetchStudents();
   }, []);

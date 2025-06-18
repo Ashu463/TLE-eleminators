@@ -44,7 +44,7 @@ const Dashboard = () => {
     setEditingStudent(null);
   };
 
-  const handleDeleteStudent = (studentId) => {
+  const handleDeleteStudent = () => {
     fetchStudents();
   };
 

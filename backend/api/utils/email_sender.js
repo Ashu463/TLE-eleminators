@@ -1,11 +1,13 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import axios from 'axios';
 import nodemailer from 'nodemailer';
 import { Student } from '../../db/index.js';
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'isolatedbonobo971@gmail.com',
-    pass: 'opnr jjjw ehfp ypij'
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
   }
 });
 

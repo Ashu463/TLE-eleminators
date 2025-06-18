@@ -39,4 +39,13 @@ const studentSchema = new mongoose.Schema({
 
 const Student = mongoose.model('Student', studentSchema);
 
-export { Student };
+const settingSchema = new mongoose.Schema({
+  cronTime: String,      
+  cronFrequency: String,
+  emailRemindersEnabled: Boolean,
+  inactivityDays: Number
+});
+
+const AppSetting = mongoose.model('AppSetting', settingSchema);
+
+export { Student, AppSetting };

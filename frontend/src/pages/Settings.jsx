@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
-
+import axios from 'axios';
 const Settings = () => {
   const { isDark } = useTheme();
   const [cronTime, setCronTime] = useState('02:00');
@@ -10,9 +10,20 @@ const Settings = () => {
     inactivityDays: 7
   });
 
-  const handleSaveSettings = () => {
-    alert('Settings saved successfully!');
+  const handleSaveSettings = async () => {
+    try {
+      await axios.post('http://localhost:3000/api/settings/set', {
+        cronTime,
+        cronFrequency,
+        emailRemindersEnabled: emailSettings.enabled,
+        inactivityDays: emailSettings.inactivityDays
+      });
+      alert('Settings saved successfully!');
+    } catch (error) {
+      alert('Failed to save settings', error);
+    }
   };
+
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">

@@ -1,6 +1,6 @@
 import express from 'express';
 import {Student} from '../db/index.js';
-import { fetchCodeforcesUserData } from './fetch_data.js';
+import { fetchCodeforcesUserData } from './utils/fetch_data.js';
 
 const apiRouter = express.Router();
 apiRouter.use(express.json());
@@ -90,4 +90,5 @@ apiRouter.get('/students/:handle', async (req, res) => {
 apiRouter.get('/health', (req, res) => {
   res.send('Hello from the backend API!');
 });
+
 export default apiRouter;

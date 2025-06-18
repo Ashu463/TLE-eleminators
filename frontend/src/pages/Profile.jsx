@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import studentData from '../../../backend/api/student_data';
+import studentData from '../../../backend/api//utils/student_data';
 import RatingChart from '../components/RatingChart';
 import ProblemStats from '../components/ProblemStats';
 import { Mail, Clock } from 'lucide-react';

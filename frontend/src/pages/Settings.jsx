@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
+
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const Settings = () => {
   const { isDark } = useTheme();
   const [cronTime, setCronTime] = useState('02:00');
@@ -12,7 +15,7 @@ const Settings = () => {
 
   const handleSaveSettings = async () => {
     try {
-      await axios.post('http://localhost:3000/api/settings/set', {
+      await axios.post(`${API_BASE}/api/settings/set`, {
         cronTime,
         cronFrequency,
         emailRemindersEnabled: emailSettings.enabled,

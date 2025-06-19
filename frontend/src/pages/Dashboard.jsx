@@ -5,6 +5,8 @@ import Modal from '../components/Modal';
 import StudentForm from '../components/StudentForm';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -14,7 +16,7 @@ const Dashboard = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/students');
+      const res = await axios.get(`${API_BASE}/api/students`);
       if (!res.data || !Array.isArray(res.data.data)) {
         throw new Error('Invalid data format received from API');
       }

@@ -7,6 +7,7 @@ import ProblemStats from '../components/ProblemStats';
 import { Mail, Clock } from 'lucide-react';
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 const Profile = () => {
   const { isDark } = useTheme();
@@ -28,8 +29,8 @@ const Profile = () => {
           return;
         }
         console.log('Fetching student data for handle:', handle);
-        const res = await axios.get(`http://localhost:3000/api/students/${handle}`);
-        console.log(res, ' is the response')
+        const res = await axios.get(`${API_BASE}/api/students/${handle}`);
+
         const data = res.data.data;
         setStudent(data);
       } catch (e) {

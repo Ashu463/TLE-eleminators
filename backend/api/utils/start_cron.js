@@ -7,8 +7,13 @@ export const startCron = async () => {
   const settings = await AppSetting.findOne({});
 
   if (!settings || !settings.cronTime) {
-    console.warn('No cronTime found in DB. Skipping cron scheduling.');
-    return;
+    await AppSetting.create({
+        cronTime: '02:00',
+        cronFrequency: 'daily',
+        emailRemindersEnabled: true,
+        inactivityDays: 7
+      });
+      console.log('No cronTime found in DB. Default AppSetting inserted into DB');
   }
 
   const [hour, minute] = settings.cronTime.split(':').map(Number);

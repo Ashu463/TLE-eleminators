@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const StudentForm = ({ student, onSubmit, onCancel }) => {
   const { isDark } = useTheme();
   const [formData, setFormData] = useState({
@@ -16,7 +18,7 @@ const StudentForm = ({ student, onSubmit, onCancel }) => {
     try {
       if (!student) {
         try{
-            await axios.post('http://localhost:3000/api/students', formData);
+            await axios.post(`${API_BASE}/api/students`, formData);
             alert('Student added successfully');
 
         }catch (error) {
@@ -24,7 +26,7 @@ const StudentForm = ({ student, onSubmit, onCancel }) => {
             }
       } else {
         try{
-            await axios.put(`http://localhost:3000/api/students/${student._id}`, formData);
+            await axios.put(`${API_BASE}/api/students/${student._id}`, formData);
             alert('Student updated successfully');
 
         }catch (error) {

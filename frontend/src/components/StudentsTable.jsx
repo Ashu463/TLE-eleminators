@@ -3,6 +3,8 @@ import { Plus, Edit2, Trash2, Eye, Download } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const StudentsTable = ({ students, onAdd, onEdit, onDelete, onViewDetails }) => {
   const { isDark } = useTheme();
 
@@ -93,7 +95,7 @@ const StudentsTable = ({ students, onAdd, onEdit, onDelete, onViewDetails }) => 
                     </button>
                     <button
                       onClick={async () => {
-                        await axios.delete(`http://localhost:3000/api/students/${student._id}`);
+                        await axios.delete(`${API_BASE}/api/students/${student._id}`);
                         onDelete(student._id);
                       }}
                       className="text-red-600 hover:text-red-900 p-1"

@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use('/api', apiRouter);
 app.use('/api/settings', settingsRouter)
-app.get('/health', (req, res) => {
+app.get('/', (req, res) => {
   res.json({message: 'Hello from the backend!'});
 });
 

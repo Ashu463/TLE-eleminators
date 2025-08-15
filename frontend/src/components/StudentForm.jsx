@@ -18,6 +18,8 @@ const StudentForm = ({ student, onSubmit, onCancel }) => {
     try {
       if (!student) {
         try{
+            console.log('Fetching Codeforces user data...');
+            console.log(API_BASE, ' is the base url')
             await axios.post(`${API_BASE}/api/students`, formData);
             alert('Student added successfully');
 

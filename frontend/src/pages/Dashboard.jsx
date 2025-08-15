@@ -16,6 +16,8 @@ const Dashboard = () => {
 
   const fetchStudents = async () => {
     try {
+      console.log('Fetching students from API...');
+      console.log(API_BASE, ' is the base url');
       const res = await axios.get(`${API_BASE}/api/students`);
       if (!res.data || !Array.isArray(res.data.data)) {
         throw new Error('Invalid data format received from API');

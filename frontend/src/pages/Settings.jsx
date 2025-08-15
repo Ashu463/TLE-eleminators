@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_BACKEND_URL;
+const API_BASE = 'https://tleeleminatorsbackend.vercel.app';
 
 const Settings = () => {
   const { isDark } = useTheme();

@@ -5,7 +5,8 @@ import Modal from '../components/Modal';
 import StudentForm from '../components/StudentForm';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE = import.meta.env.VITE_BACKEND_URL;
+const API_BASE = 'https://tleeleminatorsbackend.vercel.app';
+console.log(API_BASE, ' is the base url');
 
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
@@ -16,8 +17,6 @@ const Dashboard = () => {
 
   const fetchStudents = async () => {
     try {
-      console.log('Fetching students from API...');
-      console.log(API_BASE, ' is the base url');
       const res = await axios.get(`${API_BASE}/api/students`);
       if (!res.data || !Array.isArray(res.data.data)) {
         throw new Error('Invalid data format received from API');

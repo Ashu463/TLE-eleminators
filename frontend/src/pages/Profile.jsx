@@ -7,7 +7,7 @@ import ProblemStats from '../components/ProblemStats';
 import { Mail, Clock } from 'lucide-react';
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_BACKEND_URL;
+const API_BASE = 'https://tleeleminatorsbackend.vercel.app';
 
 const Profile = () => {
   const { isDark } = useTheme();
